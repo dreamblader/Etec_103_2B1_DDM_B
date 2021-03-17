@@ -7,16 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/am_tabela_horas"
+        layout="@layout/item_daily_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/am_criar_horas_btn"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/am_criar_horas_btn"
         style="@style/DefaultButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:drawableStart="@drawable/ic_add"
         android:text="@string/new_schedule"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/am_tabela_horas" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/am_detalhes_btn"
@@ -28,7 +40,7 @@
         android:text="@string/schedule_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/am_criar_horas_btn" />
+        app:layout_constraintTop_toBottomOf="@id/am_criar_horas_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

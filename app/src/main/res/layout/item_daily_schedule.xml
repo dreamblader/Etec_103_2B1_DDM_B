@@ -9,55 +9,66 @@
 
     <TextView
         android:id="@+id/ids_day_name"
-        android:layout_width="wrap_content"
+        style="@style/TableHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Terça - 02 de Março" />
 
     <TextView
         android:id="@+id/ids_morning"
-        android:layout_width="wrap_content"
+        style="@style/TableMidHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/morning"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ids_day_name" />
+        app:layout_constraintTop_toBottomOf="@id/ids_day_name" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ids_morning_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/ids_morning"
-        app:layout_constraintTop_toBottomOf="@+id/ids_morning" />
+        app:layout_constraintStart_toStartOf="@id/ids_morning"
+        app:layout_constraintTop_toBottomOf="@id/ids_morning"
+        tools:itemCount="3"/>
 
     <TextView
         android:id="@+id/ids_afternoon"
-        android:layout_width="wrap_content"
+        style="@style/TableMidHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/afternoon"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ids_morning_list" />
+        app:layout_constraintTop_toBottomOf="@id/ids_morning_list" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ids_afternoon_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/ids_afternoon"
-        app:layout_constraintTop_toBottomOf="@+id/ids_afternoon" />
+        app:layout_constraintStart_toStartOf="@id/ids_afternoon"
+        app:layout_constraintTop_toBottomOf="@id/ids_afternoon"
+        tools:itemCount="3"/>
 
     <TextView
         android:id="@+id/ids_night"
-        android:layout_width="wrap_content"
+        style="@style/TableMidHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/night"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ids_afternoon_list" />
+        app:layout_constraintTop_toBottomOf="@id/ids_afternoon_list" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ids_night_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/ids_night"
-        app:layout_constraintTop_toBottomOf="@+id/ids_night" />
+        app:layout_constraintStart_toStartOf="@id/ids_night"
+        app:layout_constraintTop_toBottomOf="@id/ids_night"
+        tools:itemCount="3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
