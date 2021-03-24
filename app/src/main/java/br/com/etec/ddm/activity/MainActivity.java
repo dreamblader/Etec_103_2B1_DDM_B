@@ -1,4 +1,4 @@
-package br.com.etec.ddm;
+package br.com.etec.ddm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import br.com.etec.ddm.R;
 
 public class MainActivity extends AppCompatActivity {
 
