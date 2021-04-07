@@ -2,12 +2,9 @@ package br.com.etec.ddm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import br.com.etec.ddm.R;
 import br.com.etec.ddm.dialog.NewScheduleDialog;
@@ -23,5 +20,6 @@ public class MainActivity extends AppCompatActivity {
             NewScheduleDialog dialog = new NewScheduleDialog();
             dialog.show(getSupportFragmentManager(), NewScheduleDialog.class.getName());
         });
+
     }
 }
