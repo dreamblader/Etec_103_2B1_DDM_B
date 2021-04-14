@@ -1,6 +1,8 @@
 package br.com.etec.ddm.dialog;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.service.autofill.SaveCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,18 @@ import br.com.etec.ddm.util.HourTextWatcher;
 
 public class NewScheduleDialog extends BottomSheetDialogFragment {
     boolean canSave;
+    SaveCallback activityCallback;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try{
+            activityCallback = (SaveCallback) context;
+        } catch(ClassCastException error){
+            throw new ClassCastException("Activity: "+context.toString()+" do not implement SaveCallback");
+        }
+    }
 
     @Nullable
     @Override
@@ -52,6 +66,8 @@ public class NewScheduleDialog extends BottomSheetDialogFragment {
 
             if(canSave){
                 ScheduleModel schedule = new ScheduleModel(eventNameText, initHourText, finishHourText, calendarView.getDate());
+                activityCallback.saveScheduleModel(schedule);
+                dismiss();
             }
 
         });
@@ -60,11 +76,14 @@ public class NewScheduleDialog extends BottomSheetDialogFragment {
     private void checkEmptyEditText(EditText editText){
         String text = editText.getText().toString();
 
-        if(text.isEmpty() || text == null){
+        if(text.isEmpty()){
             editText.setHintTextColor(ContextCompat.getColor(getContext(), R.color.red_alert));
             canSave = false;
         }
     }
 
+    public interface SaveCallback{
+        void saveScheduleModel(ScheduleModel model);
+    }
 
 }

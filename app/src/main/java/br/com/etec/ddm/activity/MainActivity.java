@@ -2,14 +2,21 @@ package br.com.etec.ddm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.etec.ddm.R;
 import br.com.etec.ddm.dialog.NewScheduleDialog;
+import br.com.etec.ddm.model.ScheduleModel;
 
-public class MainActivity extends AppCompatActivity {
+import static java.util.Collections.emptyList;
+
+public class MainActivity extends AppCompatActivity implements NewScheduleDialog.SaveCallback {
+
+    List<ScheduleModel> scheduleList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,5 +28,11 @@ public class MainActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), NewScheduleDialog.class.getName());
         });
 
+    }
+
+    @Override
+    public void saveScheduleModel(ScheduleModel model) {
+        scheduleList.add(model);
+        System.out.println(model.toString());
     }
 }

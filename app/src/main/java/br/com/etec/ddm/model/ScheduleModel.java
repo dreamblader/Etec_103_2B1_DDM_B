@@ -104,4 +104,16 @@ public class ScheduleModel {
 
         return hour+":"+minute;
     }
+
+    @Override
+    public String toString() {
+        return "ScheduleModel{" +
+                "year=" + year +
+                ", month=" + month +
+                ", day=" + day +
+                ", initialHour='" + initialHour + '\'' +
+                ", finalHour='" + finalHour + '\'' +
+                ", eventName='" + eventName + '\'' +
+                '}';
+    }
 }
