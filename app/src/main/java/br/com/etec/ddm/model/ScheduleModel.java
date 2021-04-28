@@ -105,6 +105,10 @@ public class ScheduleModel {
         return hour+":"+minute;
     }
 
+    public String getDetail(){
+        return initialHour+" ás "+finalHour+" - "+eventName;
+    }
+
     @Override
     public String toString() {
         return "ScheduleModel{" +

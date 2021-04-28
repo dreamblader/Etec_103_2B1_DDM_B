@@ -29,10 +29,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ids_morning_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/ids_morning"
         app:layout_constraintTop_toBottomOf="@id/ids_morning"
+        tools:listitem="@layout/item_schedule_detail"
         tools:itemCount="3"/>
 
     <TextView
@@ -47,10 +48,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ids_afternoon_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/ids_afternoon"
         app:layout_constraintTop_toBottomOf="@id/ids_afternoon"
+        tools:listitem="@layout/item_schedule_detail"
         tools:itemCount="3"/>
 
     <TextView
@@ -65,10 +67,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ids_night_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/ids_night"
         app:layout_constraintTop_toBottomOf="@id/ids_night"
+        tools:listitem="@layout/item_schedule_detail"
         tools:itemCount="3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

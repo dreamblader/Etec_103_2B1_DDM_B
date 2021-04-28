@@ -26,6 +26,14 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TableItem" parent="TableStyle">
+        <item name="android:background">@color/purple_DD8</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:textAlignment">textStart</item>
+    </style>
+
     <style name="TableMidHeader" parent="TableStyle">
         <item name="android:background">@color/purple_BD8</item>
         <item name="android:textSize">14sp</item>
