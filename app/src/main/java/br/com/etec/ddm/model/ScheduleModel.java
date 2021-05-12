@@ -17,6 +17,11 @@ public class ScheduleModel {
         setDate(date);
     }
 
+    public ScheduleModel(int day, int month, int year){
+        setDay(day);
+        setMonth(month);
+    }
+
     //YEAR
     public int getYear(){
         return year;
@@ -107,6 +112,13 @@ public class ScheduleModel {
 
     public String getDetail(){
         return initialHour+" ás "+finalHour+" - "+eventName;
+    }
+
+    public String getFileName() { return year+"_"+month+"_"+day+".lsm";}
+
+    //MISC
+    public boolean isInThisDate(ScheduleModel model){
+        return day == model.day && month == model.month && year == model.year;
     }
 
     @Override
