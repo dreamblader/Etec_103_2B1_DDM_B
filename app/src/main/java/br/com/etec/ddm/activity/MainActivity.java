@@ -7,8 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
         setupView();
         setupRecyclerView();
         setupListeners();
+        setupData();
     }
 
     private void setupView(){
@@ -96,12 +106,41 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
         });
     }
 
+    private void setupData(){
+        File file = new File(getFilesDir(), mainDay.getFileName());
+
+        if(file.exists()){
+            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+                ScheduleModel temp;
+                while((temp = (ScheduleModel) ois.readObject()) != null){
+                    sortSchedule(temp);
+                }
+            }catch (Exception error){
+                if(error instanceof WriteAbortedException &&
+                        ((WriteAbortedException) error).detail instanceof NotSerializableException
+                ){
+                    file.delete();
+                }
+                Toast.makeText(this,"Falha na Leitura do Arquivo.\n Causa:"+error.getMessage(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void saveScheduleModel(ScheduleModel model) {
 
         File file = new File(getFilesDir(), model.getFileName());
 
-        //TODO Salvar o nosso Arquivo
+        try{
+            boolean isFirst = file.createNewFile();
+            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))){
+                oos.writeObject(model);
+            }
+        }catch (Exception error){
+            Toast.makeText(this,"Falha no Salvamento de Arquivo.\n Causa:"+error.getMessage(), Toast.LENGTH_LONG).show();
+            error.printStackTrace();
+        }
 
         if(mainDay.isInThisDate(model)){
             sortSchedule(model);

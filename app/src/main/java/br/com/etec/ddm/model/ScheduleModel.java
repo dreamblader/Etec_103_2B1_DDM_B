@@ -1,8 +1,9 @@
 package br.com.etec.ddm.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class ScheduleModel {
+public class ScheduleModel implements Serializable {
     private int year;
     private int month;
     private int day;
@@ -20,6 +21,7 @@ public class ScheduleModel {
     public ScheduleModel(int day, int month, int year){
         setDay(day);
         setMonth(month);
+        setYear(year);
     }
 
     //YEAR
