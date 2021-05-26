@@ -3,10 +3,15 @@ package br.com.etec.ddm.model;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import static br.com.etec.ddm.util.DateConverter.dayOfWeek;
+import static br.com.etec.ddm.util.DateConverter.monthName;
+
 public class ScheduleModel implements Serializable {
     private int year;
     private int month;
     private int day;
+    private String weekDay;
+    private String monthName;
     private String initialHour;
     private String finalHour;
     private String eventName;
@@ -22,6 +27,10 @@ public class ScheduleModel implements Serializable {
         setDay(day);
         setMonth(month);
         setYear(year);
+    }
+
+    public ScheduleModel(long date){
+        setDate(date);
     }
 
     //YEAR
@@ -79,6 +88,24 @@ public class ScheduleModel implements Serializable {
         this.eventName = eventName;
     }
 
+    //WEEKDAY
+    public String getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay;
+    }
+
+    //MONTH NAME
+    public String getMonthName() {
+        return monthName;
+    }
+
+    public void setMonthName(String monthName) {
+        this.monthName = monthName;
+    }
+
     //CUSTOM
     public void setDate(long milisseconds){
         Calendar calendar = Calendar.getInstance();
@@ -86,6 +113,9 @@ public class ScheduleModel implements Serializable {
         setYear(calendar.get(Calendar.YEAR));
         setMonth(calendar.get(Calendar.MONTH));
         setDay(calendar.get(Calendar.DAY_OF_MONTH));
+
+        setWeekDay(dayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)));
+        setMonthName(monthName(calendar.get(Calendar.MONTH)));
     }
 
     public String getHourInterval(){
@@ -134,4 +164,6 @@ public class ScheduleModel implements Serializable {
                 ", eventName='" + eventName + '\'' +
                 '}';
     }
+
+
 }

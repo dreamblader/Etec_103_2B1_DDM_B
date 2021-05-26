@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +21,7 @@ import java.io.ObjectOutputStream;
 import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +35,8 @@ import static br.com.etec.ddm.util.DateConverter.dayOfWeek;
 import static br.com.etec.ddm.util.DateConverter.monthName;
 
 public class MainActivity extends AppCompatActivity implements NewScheduleDialog.SaveCallback {
+
+    private static final String MY_DAY = "MY_DAY";
 
     ScheduleModel mainDay;
 
@@ -57,20 +61,16 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
     }
 
     private void setupView(){
-        Calendar calendar = Calendar.getInstance();
+        mainDay = getIntent().getParcelableExtra(MY_DAY);
 
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
+        if(mainDay == null){
+            Calendar calendar = Calendar.getInstance();
+            mainDay = new ScheduleModel(calendar.getTimeInMillis());
+        }
 
-        String weekDay = dayOfWeek(calendar.get(Calendar.DAY_OF_WEEK));
-        String monthName = monthName(month);
-        String titleString = weekDay+" - "+day+" de "+monthName;
-
+        String titleString = mainDay.getWeekDay()+" - "+mainDay.getDay()+" de "+mainDay.getMonthName();
         TextView title = findViewById(R.id.ids_day_name);
         title.setText(titleString);
-
-        mainDay = new ScheduleModel(day, month, year);
     }
 
     private void setupRecyclerView(){
@@ -116,13 +116,11 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
                     sortSchedule(temp);
                 }
             }catch (Exception error){
-                if(error instanceof WriteAbortedException &&
-                        ((WriteAbortedException) error).detail instanceof NotSerializableException
-                ){
-                    file.delete();
+                //file.delete();
+               if(!(error instanceof EOFException)){
+                    Toast.makeText(this,"Falha na Leitura do Arquivo.\n Causa:"+error.getMessage(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
                 }
-                Toast.makeText(this,"Falha na Leitura do Arquivo.\n Causa:"+error.getMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
             }
         }
     }
@@ -133,9 +131,16 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
         File file = new File(getFilesDir(), model.getFileName());
 
         try{
-            boolean isFirst = file.createNewFile();
-            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file, true))){
-                oos.writeObject(model);
+            boolean exist = !file.createNewFile();
+
+            try(FileOutputStream fos = new FileOutputStream(file, true)){
+                try(ObjectOutputStream oos = new ObjectOutputStream(fos)){
+                    if(exist && file.length() > 0){
+                        long pos = fos.getChannel().position()-4;
+                        fos.getChannel().truncate(pos);
+                    }
+                    oos.writeObject(model);
+                }
             }
         }catch (Exception error){
             Toast.makeText(this,"Falha no Salvamento de Arquivo.\n Causa:"+error.getMessage(), Toast.LENGTH_LONG).show();
@@ -153,19 +158,26 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
         if(initHour.compareTo("12:00") <= 0){
 
             morningScheduleList.add(model);
+            sortList(morningScheduleList);
             morningAdapter.notifyDataSetChanged();
 
         } else if(initHour.compareTo("19:00")<= 0){
 
             afternoonScheduleList.add(model);
+            sortList(afternoonScheduleList);
             afternoonAdapter.notifyDataSetChanged();
 
         } else {
 
             nightScheduleList.add(model);
+            sortList(nightScheduleList);
             nightAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    private void sortList(List<ScheduleModel> list) {
+        Collections.sort(list, (sm1, sm2) -> sm1.getInitialHour().compareTo(sm2.getInitialHour()));
     }
 
 
