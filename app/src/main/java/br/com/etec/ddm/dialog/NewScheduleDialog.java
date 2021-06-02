@@ -16,6 +16,9 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicLong;
+
 import br.com.etec.ddm.R;
 import br.com.etec.ddm.model.ScheduleModel;
 import br.com.etec.ddm.util.HourTextWatcher;
@@ -52,10 +55,20 @@ public class NewScheduleDialog extends BottomSheetDialogFragment {
         finishHour.addTextChangedListener(new HourTextWatcher());
 
         AppCompatButton saveButton = view.findViewById(R.id.dns_submit_btn);
+        CalendarView calendarView = view.findViewById(R.id.dns_calendar);
+
+        AtomicLong myDateMilis = new AtomicLong(calendarView.getDate());
+
+        calendarView.setOnDateChangeListener((v, year, month, dayOfMonth) ->{
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, dayOfMonth);
+            myDateMilis.set(calendar.getTimeInMillis());
+        });
+
         saveButton.setOnClickListener( button -> {
             canSave = true;
             EditText eventName = view.findViewById(R.id.dns_event_name);
-            CalendarView calendarView = view.findViewById(R.id.dns_calendar);
+
             String eventNameText = eventName.getText().toString();
             String initHourText = initHour.getText().toString();
             String finishHourText = finishHour.getText().toString();
@@ -65,7 +78,7 @@ public class NewScheduleDialog extends BottomSheetDialogFragment {
             checkEmptyEditText(finishHour);
 
             if(canSave){
-                ScheduleModel schedule = new ScheduleModel(eventNameText, initHourText, finishHourText, calendarView.getDate());
+                ScheduleModel schedule = new ScheduleModel(eventNameText, initHourText, finishHourText, myDateMilis.get());
                 activityCallback.saveScheduleModel(schedule);
                 dismiss();
             }

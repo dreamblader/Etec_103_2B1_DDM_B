@@ -49,6 +49,7 @@ public class ScheduleModel implements Serializable {
     }
 
     public void setMonth(int month) {
+        setMonthName(monthName(month));
         this.month = month;
     }
 
@@ -115,7 +116,6 @@ public class ScheduleModel implements Serializable {
         setDay(calendar.get(Calendar.DAY_OF_MONTH));
 
         setWeekDay(dayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)));
-        setMonthName(monthName(calendar.get(Calendar.MONTH)));
     }
 
     public String getHourInterval(){

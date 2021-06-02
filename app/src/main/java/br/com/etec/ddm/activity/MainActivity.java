@@ -36,7 +36,7 @@ import static br.com.etec.ddm.util.DateConverter.monthName;
 
 public class MainActivity extends AppCompatActivity implements NewScheduleDialog.SaveCallback {
 
-    private static final String MY_DAY = "MY_DAY";
+    public static final String MY_DAY = "MY_DAY";
 
     ScheduleModel mainDay;
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
     }
 
     private void setupView(){
-        mainDay = getIntent().getParcelableExtra(MY_DAY);
+        mainDay = (ScheduleModel) getIntent().getSerializableExtra(MY_DAY);
 
         if(mainDay == null){
             Calendar calendar = Calendar.getInstance();
