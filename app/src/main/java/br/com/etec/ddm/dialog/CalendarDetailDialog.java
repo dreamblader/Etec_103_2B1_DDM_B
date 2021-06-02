@@ -24,6 +24,17 @@ import static br.com.etec.ddm.activity.MainActivity.MY_DAY;
 
 public class CalendarDetailDialog extends BottomSheetDialogFragment {
 
+    private static final String MAIN_DAY = "MAIN_DAY";
+
+    public static CalendarDetailDialog newInstance(ScheduleModel mainDay){
+        CalendarDetailDialog dialog = new CalendarDetailDialog();
+        Bundle params = new Bundle();
+        params.putSerializable(MAIN_DAY,mainDay);
+        dialog.setArguments(params);
+
+        return dialog;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +47,12 @@ public class CalendarDetailDialog extends BottomSheetDialogFragment {
 
         AppCompatButton checkButton = view.findViewById(R.id.dcd_ok_btn);
         CalendarView calendarView = view.findViewById(R.id.dcd_calendar);
+
+        assert getArguments() != null;
+        ScheduleModel mainDay = (ScheduleModel) getArguments().getSerializable(MAIN_DAY);
+        if(mainDay != null){
+            calendarView.setDate(mainDay.getDate());
+        }
 
         AtomicLong myDateMilis = new AtomicLong(calendarView.getDate());
 

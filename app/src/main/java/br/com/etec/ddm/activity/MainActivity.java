@@ -96,12 +96,12 @@ public class MainActivity extends AppCompatActivity implements NewScheduleDialog
         AppCompatButton detalhes = findViewById(R.id.am_detalhes_btn);
 
         novoHorario.setOnClickListener(button -> {
-            NewScheduleDialog dialog = new NewScheduleDialog();
+            NewScheduleDialog dialog = NewScheduleDialog.newInstance(mainDay);
             dialog.show(getSupportFragmentManager(), NewScheduleDialog.class.getName());
         });
 
         detalhes.setOnClickListener(button ->{
-            CalendarDetailDialog dialog = new CalendarDetailDialog();
+            CalendarDetailDialog dialog = CalendarDetailDialog.newInstance(mainDay);
             dialog.show(getSupportFragmentManager(), CalendarDetailDialog.class.getName());
         });
     }

@@ -107,7 +107,7 @@ public class ScheduleModel implements Serializable {
         this.monthName = monthName;
     }
 
-    //CUSTOM
+    //DATE
     public void setDate(long milisseconds){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(milisseconds);
@@ -117,6 +117,14 @@ public class ScheduleModel implements Serializable {
 
         setWeekDay(dayOfWeek(calendar.get(Calendar.DAY_OF_WEEK)));
     }
+
+    public long getDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(this.year, this.month, this.day);
+        return calendar.getTimeInMillis();
+    }
+
+    //CUSTOM
 
     public String getHourInterval(){
         String[] initialHourSplit = this.initialHour.split(":");

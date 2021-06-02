@@ -24,8 +24,20 @@ import br.com.etec.ddm.model.ScheduleModel;
 import br.com.etec.ddm.util.HourTextWatcher;
 
 public class NewScheduleDialog extends BottomSheetDialogFragment {
+
+    private static final String MAIN_DAY = "MAIN_DAY";
+
     boolean canSave;
     SaveCallback activityCallback;
+
+    public static NewScheduleDialog newInstance(ScheduleModel mainDay){
+        NewScheduleDialog dialog = new NewScheduleDialog();
+        Bundle params = new Bundle();
+        params.putSerializable(MAIN_DAY,mainDay);
+        dialog.setArguments(params);
+
+        return dialog;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -56,6 +68,12 @@ public class NewScheduleDialog extends BottomSheetDialogFragment {
 
         AppCompatButton saveButton = view.findViewById(R.id.dns_submit_btn);
         CalendarView calendarView = view.findViewById(R.id.dns_calendar);
+
+        assert getArguments() != null;
+        ScheduleModel mainDay = (ScheduleModel) getArguments().getSerializable(MAIN_DAY);
+        if(mainDay != null){
+            calendarView.setDate(mainDay.getDate());
+        }
 
         AtomicLong myDateMilis = new AtomicLong(calendarView.getDate());
 
