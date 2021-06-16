@@ -137,17 +137,19 @@ public class ScheduleModel implements Serializable {
 
             hour = Integer.parseInt(finalHourSplit[0]) - Integer.parseInt(initialHourSplit[0]); // 12:00 -> 11:00 = 11- 12 = -1 (+24)
             minute = Integer.parseInt(finalHourSplit[1]) - Integer.parseInt(initialHourSplit[1]);
-            if(minute >0){
+            if(minute < 0){
                 minute+= 60;
                 hour-=1;
             }
-            if(hour > 0){
+            if(hour < 0){
                 hour += 24;
             }
 
         }
 
-        return hour+":"+minute;
+        String padding = minute<10 ? "0" : "";
+
+        return hour+":"+padding+minute;
     }
 
     public String getDetail(){
